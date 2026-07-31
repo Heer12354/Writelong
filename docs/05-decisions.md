@@ -3589,3 +3589,18 @@ text. Both are now closed:
   detector and correction validation thresholds.
 - Consequences: Correction behavior is simpler to reason about and the Settings UI has one fewer
   safety-related toggle. Previously stored user defaults for the removed key are ignored.
+
+## ADR-116 — Learn writing style from aggregate accepted-completion signals
+
+- Date: 2026-07-31
+- Status: accepted
+- Context: Personalized completions need to adapt to a user's style without retaining sensitive
+  source text or adding a cloud dependency.
+- Decision: Keep a local file-backed profile per user-selected writing context. Each profile stores
+  only aggregate counters and ratios (sentence length, capitalization, punctuation, emoji,
+  Markdown, indentation, comments, abbreviations, and non-recoverable word-length shapes).
+  Accepted completion text is analyzed in memory and immediately discarded. The profile contributes
+  short style instructions to the existing prompt builder; it never changes model weights.
+- Consequences: Profiles can be created, selected, disabled, reset, exported, and imported without
+  exposing stored writing. Lexical preferences intentionally remain statistical rather than raw
+  phrase recall, trading exact phrase reuse for stronger privacy guarantees.

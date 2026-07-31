@@ -16,7 +16,7 @@ struct GeneralSettingsView: View {
         Form {
             Section("Startup") {
                 LaunchAtLogin.Toggle()
-                Text("Start KeyType automatically when you log in to your Mac.")
+                Text("Start Writelong automatically when you log in to your Mac.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }
@@ -29,6 +29,31 @@ struct GeneralSettingsView: View {
                 }
                 .pickerStyle(.segmented)
                 Text("Shorter completions are more conservative; longer ones suggest more at once.")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+            }
+
+            Section("Appearance") {
+                Picker("Menu bar icon", selection: $settings.menuBarIcon) {
+                    ForEach(MenuBarIcon.allCases) { icon in
+                        Label(icon.title, systemImage: icon.symbolName).tag(icon)
+                    }
+                }
+                Picker("App logo", selection: $settings.appLogo) {
+                    ForEach(AppLogo.allCases) { logo in
+                        if logo == .writelong {
+                            Label {
+                                Text(logo.title)
+                            } icon: {
+                                Image("WritelongLogo")
+                            }
+                            .tag(logo)
+                        } else {
+                            Text(logo.title).tag(logo)
+                        }
+                    }
+                }
+                Text("The logo choice updates the app icon while Writelong is running.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }

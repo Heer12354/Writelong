@@ -20,11 +20,11 @@ struct KeyTypeApp: App {
                 .environment(appDelegate.completion)
                 .environment(appDelegate.updater)
         } label: {
-            MenuBarLabel()
+            MenuBarLabel(settings: appDelegate.settings)
         }
         .menuBarExtraStyle(.menu)
 
-        Window("KeyType", id: AppDelegate.onboardingWindowID) {
+        Window("Writelong", id: AppDelegate.onboardingWindowID) {
             OnboardingView(
                 permissionGuidance: appDelegate.permissionGuidance,
                 markCompleted: { appDelegate.markOnboardingCompleted() }
@@ -40,7 +40,7 @@ struct KeyTypeApp: App {
         .defaultPosition(.center)
         .commandsRemoved()
 
-        Window("KeyType Settings", id: AppDelegate.settingsWindowID) {
+        Window("Writelong Settings", id: AppDelegate.settingsWindowID) {
             SettingsView(
                 settings: appDelegate.settings,
                 telemetry: appDelegate.telemetry,

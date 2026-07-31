@@ -92,7 +92,7 @@ struct OnboardingView: View {
         case .done:
             HStack {
                 Spacer()
-                Button("Start Using KeyType") { finish() }
+                Button("Start Using Writelong") { finish() }
                     .buttonStyle(.borderedProminent)
                     .controlSize(.large)
             }
@@ -163,7 +163,7 @@ struct OnboardingView: View {
                 .font(.system(size: 44, weight: .regular))
                 .foregroundStyle(.tint)
                 .padding(.top, 8)
-            Text("Welcome to KeyType")
+            Text("Welcome to Writelong")
                 .font(.title.weight(.semibold))
             Text("On-device tab-autocomplete for any text field on your Mac. Private by default, powered by a local model.")
                 .font(.callout)

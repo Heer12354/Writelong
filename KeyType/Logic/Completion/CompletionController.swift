@@ -228,6 +228,7 @@ final class CompletionController {
     private let history: WritingHistoryStoring
     private let screenTextProvider: ScreenTextProviding
     private let telemetry: CompletionTelemetryStore
+    private let writingProfiles: WritingProfileStore
     private let presenter: InlineGhostTextPresenter
     private let placementResolver: OverlayPlacementResolver
     private let overlayCalibrator: ScreenshotOverlayCalibrator
@@ -353,6 +354,7 @@ final class CompletionController {
         history: WritingHistoryStoring = NullWritingHistoryStore(),
         screenTextProvider: ScreenTextProviding = NullScreenTextProvider(),
         telemetry: CompletionTelemetryStore = CompletionTelemetryStore(url: nil),
+        writingProfiles: WritingProfileStore = WritingProfileStore(url: nil),
         compatibilityStore: AppCompatibilityStore = KeyTypeModuleGraph.makeCompatibilityStore(),
         overlayCalibrator: ScreenshotOverlayCalibrator = ScreenshotOverlayCalibrator(),
         frontmostBundleIdentifier: @escaping () -> String? = {
@@ -364,6 +366,7 @@ final class CompletionController {
         self.history = history
         self.screenTextProvider = screenTextProvider
         self.telemetry = telemetry
+        self.writingProfiles = writingProfiles
         self.compatibilityStore = compatibilityStore
         self.presenter = InlineGhostTextPresenter()
         self.placementResolver = OverlayPlacementResolver(compatibilityStore: compatibilityStore)
@@ -603,7 +606,9 @@ final class CompletionController {
         let (sideContext, sideContextReused) = promptSideContext(for: promptContext)
         let promptResult = KeyTypeModuleGraph.makePromptBuilder().buildPrompt(
             context: promptContext,
-            customInstructions: settings.promptCustomInstructions(appInstructions: policy.customInstructions),
+            customInstructions: settings.promptCustomInstructions(
+                appInstructions: policy.customInstructions + writingProfiles.activePromptInstructions()
+            ),
             previousUserInputs: sideContext.previousUserInputs,
             pasteboardText: sideContext.pasteboardText,
             screenText: sideContext.screenText,
@@ -1870,6 +1875,7 @@ final class CompletionController {
         let (head, rest) = NextWordSplitter.split(text)
         guard !head.isEmpty else { return }
         telemetry.recordAccepted()
+        writingProfiles.recordAcceptedCompletion(head)
         predictionLog.append(
             "ACCEPT(word) \"\(PredictionLog.escape(head))\" of \"\(PredictionLog.escape(text))\""
         )
@@ -1899,6 +1905,7 @@ final class CompletionController {
     func acceptFullCompletion() {
         guard canAcceptCompletion, let (text, context) = insertionText() else { return }
         telemetry.recordAccepted()
+        writingProfiles.recordAcceptedCompletion(text)
         predictionLog.append("ACCEPT(full) \"\(PredictionLog.escape(text))\"")
         insert(text: text, context: context)
     }

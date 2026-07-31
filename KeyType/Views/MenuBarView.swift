@@ -13,10 +13,11 @@ import SwiftUI
 /// for the app's lifetime — so it is where we observe the "open onboarding" request and can react to
 /// it at launch.
 struct MenuBarLabel: View {
+    let settings: SettingsStore
     @Environment(\.openWindow) private var openWindow
 
     var body: some View {
-        Image(systemName: "text.cursor")
+        Image(systemName: settings.menuBarIcon.symbolName)
             .onReceive(NotificationCenter.default.publisher(for: .keyTypeShouldOpenOnboarding)) { _ in
                 NSApp.activate(ignoringOtherApps: true)
                 openWindow(id: AppDelegate.onboardingWindowID)
@@ -39,13 +40,13 @@ struct MenuBarView: View {
 
             Divider()
 
-            Button("Open KeyType…") {
+            Button("Open Writelong…") {
                 NSApp.activate(ignoringOtherApps: true)
                 openWindow(id: AppDelegate.onboardingWindowID)
             }
             .keyboardShortcut("o")
 
-            Button("KeyType Settings…") {
+            Button("Writelong Settings…") {
                 NSApp.activate(ignoringOtherApps: true)
                 openWindow(id: AppDelegate.settingsWindowID)
             }
@@ -59,7 +60,7 @@ struct MenuBarView: View {
 
             Divider()
 
-            Button("Quit KeyType") {
+            Button("Quit Writelong") {
                 NSApp.terminate(nil)
             }
             .keyboardShortcut("q")

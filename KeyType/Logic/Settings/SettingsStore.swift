@@ -48,6 +48,30 @@ enum CompletionLength: String, CaseIterable, Identifiable {
     }
 }
 
+enum MenuBarIcon: String, CaseIterable, Identifiable {
+    case cursor, pen, sparkle, document, brain
+
+    var id: String { rawValue }
+
+    var title: String { rawValue.capitalized }
+
+    var symbolName: String {
+        switch self {
+        case .cursor: return "text.cursor"
+        case .pen: return "pencil.tip"
+        case .sparkle: return "sparkles"
+        case .document: return "doc.text"
+        case .brain: return "brain.head.profile"
+        }
+    }
+}
+
+enum AppLogo: String, CaseIterable, Identifiable {
+    case classic, writelong
+    var id: String { rawValue }
+    var title: String { self == .classic ? "Classic" : "Writelong" }
+}
+
 /// OS-derived English spelling/phrasing preference. This stays as a small prompt-side style signal,
 /// not a user-facing setting or a regional prompt template.
 enum EnglishVariant {
@@ -125,6 +149,8 @@ final class SettingsStore {
         static let acceptCorrectionKeyCode = "KeyType.settings.acceptCorrectionKeyCode"
         static let acceptCorrectionModifiers = "KeyType.settings.acceptCorrectionModifiers"
         static let acceptCorrectionLabel = "KeyType.settings.acceptCorrectionLabel"
+        static let menuBarIcon = "KeyType.settings.menuBarIcon"
+        static let appLogo = "KeyType.settings.appLogo"
     }
 
     private let defaults: UserDefaults
@@ -167,6 +193,19 @@ final class SettingsStore {
     var selectedModelFilename: String? {
         didSet { defaults.set(selectedModelFilename, forKey: Key.selectedModelFilename) }
     }
+
+    var menuBarIcon: MenuBarIcon {
+        didSet { defaults.set(menuBarIcon.rawValue, forKey: Key.menuBarIcon) }
+    }
+
+    var appLogo: AppLogo {
+        didSet {
+            defaults.set(appLogo.rawValue, forKey: Key.appLogo)
+            onAppLogoChanged?(appLogo)
+        }
+    }
+
+    var onAppLogoChanged: ((AppLogo) -> Void)? = nil
 
     /// Bundle identifiers the user has turned completions off for.
     var perAppDisabled: Set<String> {
@@ -215,6 +254,8 @@ final class SettingsStore {
         self.completionLength = (defaults.string(forKey: Key.completionLength))
             .flatMap(CompletionLength.init(rawValue:)) ?? .medium
         self.selectedModelFilename = defaults.string(forKey: Key.selectedModelFilename)
+        self.menuBarIcon = defaults.string(forKey: Key.menuBarIcon).flatMap(MenuBarIcon.init(rawValue:)) ?? .cursor
+        self.appLogo = defaults.string(forKey: Key.appLogo).flatMap(AppLogo.init(rawValue:)) ?? .classic
         self.perAppDisabled = Set(defaults.stringArray(forKey: Key.perAppDisabled) ?? [])
         self.manualPerAppDisplayNames =
             defaults.dictionary(forKey: Key.manualPerAppDisplayNames) as? [String: String] ?? [:]

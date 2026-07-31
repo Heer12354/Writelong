@@ -36,6 +36,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     // and the prompt path (reads) use the same database connection. See ADR-023.
     let history: WritingHistoryStoring
     let telemetry: CompletionTelemetryStore
+    /// Local aggregate style profiles. Unlike writing history, these never retain source text.
+    let writingProfiles: WritingProfileStore
     let contextCapture: ContextCaptureController
     let developerOverrides: DeveloperOverrideController
     let screenContext: ScreenContextController
@@ -66,6 +68,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     /// revert once they're all closed. A set (not a counter/bool) keeps this idempotent against repeated
     /// `onAppear` calls and correct when both windows overlap. See ADR-058.
     private var dockVisibleWindowIDs: Set<String> = []
+    private var classicApplicationIcon: NSImage?
 
     override init() {
         let permissions = PermissionsManager()
@@ -77,8 +80,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         self.settings = settings
         let history = KeyTypeModuleGraph.makeWritingHistory()
         let telemetry = CompletionTelemetryStore()
+        let writingProfiles = WritingProfileStore()
         self.history = history
         self.telemetry = telemetry
+        self.writingProfiles = writingProfiles
         let developerOverrides = DeveloperOverrideController()
         self.developerOverrides = developerOverrides
         let compatibilityStore = KeyTypeModuleGraph.makeCompatibilityStore(
@@ -99,6 +104,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             history: history,
             screenTextProvider: screenContext.screenTextProvider,
             telemetry: telemetry,
+            writingProfiles: writingProfiles,
             compatibilityStore: compatibilityStore
         )
         self.correction = CorrectionController(
@@ -114,6 +120,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             compatibilityStore: compatibilityStore
         )
         super.init()
+        settings.onAppLogoChanged = { [weak self] logo in self?.applyAppLogo(logo) }
         completion.shouldSuppressForCorrection = { [weak correction] context in
             correction?.shouldSuppressCompletion(for: context) ?? false
         }
@@ -172,6 +179,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         // Background / agent app: no dock icon. LSUIElement in Info.plist already suppresses the
         // dock icon; making the activation policy explicit guards against alternate launch paths.
         NSApp.setActivationPolicy(.accessory)
+        classicApplicationIcon = NSApp.applicationIconImage
+        applyAppLogo(settings.appLogo)
 
         AppBundleWebAppClassifier.shared.primeRunningApplications()
         developerOverrides.setEnabled(settings.developerOverrideTuningEnabled)
@@ -186,6 +195,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             // instantiated lazily and can't be relied on at launch).
             DispatchQueue.main.async { [weak self] in
                 self?.requestOpenOnboarding()
+            }
+        }
+    }
+
+    private func applyAppLogo(_ logo: AppLogo) {
+        switch logo {
+        case .classic:
+            if let classicApplicationIcon { NSApp.applicationIconImage = classicApplicationIcon }
+        case .writelong:
+            if let image = NSImage(named: "WritelongLogo") {
+                NSApp.applicationIconImage = image
             }
         }
     }
