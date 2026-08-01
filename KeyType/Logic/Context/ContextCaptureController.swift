@@ -166,7 +166,8 @@ final class ContextCaptureController {
            bundleIdentifier == ownBundleIdentifier {
             return true
         }
-        return bundleIdentifier.hasPrefix("com.pattonium.keytype")
+        return bundleIdentifier.hasPrefix("com.heer12354.writelong")
+            || bundleIdentifier.hasPrefix("com.pattonium.keytype")
     }
 
     private static func isKeyTypeTarget(_ target: AppTarget) -> Bool {
@@ -175,10 +176,12 @@ final class ContextCaptureController {
            bundleIdentifier == ownBundleIdentifier {
             return true
         }
-        if bundleIdentifier.hasPrefix("com.pattonium.keytype") {
+        if bundleIdentifier.hasPrefix("com.heer12354.writelong")
+            || bundleIdentifier.hasPrefix("com.pattonium.keytype") {
             return true
         }
-        return target.appName.localizedCaseInsensitiveContains("KeyType")
+        return target.appName.localizedCaseInsensitiveContains("Writelong")
+            || target.appName.localizedCaseInsensitiveContains("KeyType")
     }
     
 }

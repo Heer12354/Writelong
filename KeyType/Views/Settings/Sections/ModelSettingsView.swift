@@ -63,7 +63,7 @@ struct ModelSettingsView: View {
             } header: {
                 Text("Use your own base model")
             } footer: {
-                Text("KeyType is tuned for the models above; other models may produce unexpected or low-quality completions.")
+                Text("Writelong is tuned for the models above; other models may produce unexpected or low-quality completions.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }

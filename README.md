@@ -1,26 +1,26 @@
 <p align="center" width="100%">
-<img width="120" alt="KeyType app icon" src="https://raw.githubusercontent.com/johnbean393/KeyType/main/.github/images/app-icon.png">
+<img width="120" alt="Writelong app icon" src="KeyType/Assets.xcassets/WritelongLogo.imageset/writelong-logo.png">
 </p>
 
-<h1 align="center">KeyType</h1>
+<h1 align="center">Writelong</h1>
 
 <p align="center">
 An open-source, on-device, system-wide tab-autocomplete utility for macOS.
 </p>
 
 <p align="center">
-  <a href="https://github.com/johnbean393/KeyType/releases/latest">
+  <a href="https://github.com/Heer12354/Writelong/releases/latest">
     <img src="https://img.shields.io/badge/Download_DMG-Latest_Release-blue?style=for-the-badge&logo=apple&logoColor=white" alt="Download DMG">
   </a>
 </p>
 
 <p align="center">
   <a href="https://youtu.be/1huNPFQHqi8">
-    <img src=".github/images/demo.gif" alt="KeyType demo video" width="720">
+    <img src=".github/images/demo.gif" alt="Writelong demo video" width="720">
   </a>
 </p>
 
-**KeyType** is an open-source, on-device, system-wide **tab-autocomplete utility for macOS**.
+**Writelong** is an open-source, on-device, system-wide **tab-autocomplete utility for macOS**.
 
 It watches the focused text field across any app, predicts a short continuation at the cursor
 using a **local LLM**, and offers it as ghost text that you accept with **Tab**.
@@ -31,22 +31,22 @@ It is a MIT-licensed alternative to the closed-source app *Cotypist*.
 
 ### Installation
 
-1. Download the latest release from the [releases](https://github.com/johnbean393/KeyType/releases) page
-2. Double-click the downloaded `KeyType.dmg` file
-3. Drag the `KeyType` app into `Applications`
-4. Open `KeyType` and complete the onboarding
+1. Download the latest release from the [releases](https://github.com/Heer12354/Writelong/releases) page
+2. Double-click the downloaded `Writelong.dmg` file
+3. Drag the `Writelong` app into `Applications`
+4. Open `Writelong` and complete the onboarding
 
 ### Development
 
 Requirements: macOS 14+ and a recent version of Xcode.
 
 ```sh
-git clone https://github.com/johnbean393/KeyType.git
-cd KeyType
+git clone https://github.com/Heer12354/Writelong.git
+cd Writelong
 open KeyType.xcworkspace
 ```
 
-Build/run the **KeyType** scheme.
+Build/run the **KeyType** scheme (the generated app is **Writelong**).
 
 Per-package builds:
 
@@ -78,4 +78,4 @@ KeyType/
 
 ## License
 
-MIT — see [LICENSE](https://github.com/johnbean393/KeyType/blob/main/LICENSE).
+MIT — see [LICENSE](https://github.com/Heer12354/Writelong/blob/main/LICENSE).

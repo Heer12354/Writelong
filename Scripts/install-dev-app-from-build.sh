@@ -2,12 +2,12 @@
 set -euo pipefail
 
 SOURCE_APP="${1:-${TARGET_BUILD_DIR:-}/${FULL_PRODUCT_NAME:-}}"
-DEST_APP="${KEYTYPE_DEV_APP_PATH:-/Applications/KeyType Dev.app}"
-DEV_APP_NAME="${KEYTYPE_DEV_APP_NAME:-KeyType Dev}"
-DEV_BUNDLE_ID="${KEYTYPE_DEV_BUNDLE_ID:-com.pattonium.KeyType.dev}"
+DEST_APP="${KEYTYPE_DEV_APP_PATH:-/Applications/Writelong Dev.app}"
+DEV_APP_NAME="${KEYTYPE_DEV_APP_NAME:-Writelong Dev}"
+DEV_BUNDLE_ID="${KEYTYPE_DEV_BUNDLE_ID:-com.heer12354.Writelong.dev}"
 
 if [[ -z "$SOURCE_APP" || ! -d "$SOURCE_APP" ]]; then
-  echo "warning: KeyType dev install skipped; source app not found at $SOURCE_APP"
+  echo "warning: Writelong dev install skipped; source app not found at $SOURCE_APP"
   exit 0
 fi
 

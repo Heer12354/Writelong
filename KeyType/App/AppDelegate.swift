@@ -327,8 +327,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         // The agent has no dock icon, so bring the alert to the front explicitly.
         NSApp.activate(ignoringOtherApps: true)
         let alert = NSAlert()
-        alert.messageText = "Quit KeyType?"
-        alert.informativeText = "KeyType will stop suggesting completions until you open it again."
+        alert.messageText = "Quit Writelong?"
+        alert.informativeText = "Writelong will stop suggesting completions until you open it again."
         alert.alertStyle = .warning
         // First button is the default (highlighted, triggered by Return) and sits on the right.
         alert.addButton(withTitle: "Quit")

@@ -27,11 +27,5 @@
 	<true/>
 	<key>NSHumanReadableCopyright</key>
 	<string></string>
-	<!-- Sparkle in-app updates (see ADR-051). The EdDSA public key matches the private key in the
-	     release machine's login keychain; the feed is served by GitHub Pages from docs/. -->
-	<key>SUFeedURL</key>
-	<string>https://johnbean393.github.io/KeyType/appcast.xml</string>
-	<key>SUPublicEDKey</key>
-	<string>jrJEixL9VTAptOmKf2JJ8aLoiMVV0bNcSNA1covfmtw=</string>
 </dict>
 </plist>

@@ -17,7 +17,16 @@ struct MenuBarLabel: View {
     @Environment(\.openWindow) private var openWindow
 
     var body: some View {
-        Image(systemName: settings.menuBarIcon.symbolName)
+        Group {
+            if settings.menuBarIcon == .brand {
+                Image("WritelongLogo")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 18, height: 18)
+            } else {
+                Image(systemName: settings.menuBarIcon.symbolName)
+            }
+        }
             .onReceive(NotificationCenter.default.publisher(for: .keyTypeShouldOpenOnboarding)) { _ in
                 NSApp.activate(ignoringOtherApps: true)
                 openWindow(id: AppDelegate.onboardingWindowID)

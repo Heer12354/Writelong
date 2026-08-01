@@ -299,7 +299,8 @@ final class CorrectionController {
     }
 
     private static func isKeyTypeTarget(_ target: AppTarget) -> Bool {
-        target.bundleIdentifier == "com.pattonium.KeyType"
+        target.bundleIdentifier == "com.heer12354.Writelong"
+            || target.bundleIdentifier == "com.pattonium.KeyType"
     }
 
     private static func target(for candidate: CorrectionCandidate, context: TextFieldContext) -> CorrectionTarget {

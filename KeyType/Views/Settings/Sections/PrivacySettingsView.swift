@@ -96,7 +96,7 @@ struct PrivacySettingsView: View {
                     Text("Deletes all stored writing history and local telemetry from this device. This cannot be undone.")
                 }
             } footer: {
-                Text("Everything KeyType stores stays on this device.")
+                Text("Everything Writelong stores stays on this device.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }

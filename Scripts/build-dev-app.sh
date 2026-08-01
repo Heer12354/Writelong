@@ -4,23 +4,23 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DERIVED_DATA_PATH="${KEYTYPE_DERIVED_DATA_PATH:-"$ROOT_DIR/.build/DerivedData-dev"}"
 CONFIGURATION="${KEYTYPE_CONFIGURATION:-Debug}"
-APP_NAME="${KEYTYPE_DEV_APP_NAME:-KeyType Dev}"
-BUNDLE_IDENTIFIER="${KEYTYPE_DEV_BUNDLE_ID:-com.pattonium.KeyType.dev}"
+APP_NAME="${KEYTYPE_DEV_APP_NAME:-Writelong Dev}"
+BUNDLE_IDENTIFIER="${KEYTYPE_DEV_BUNDLE_ID:-com.heer12354.Writelong.dev}"
 INSTALL_PATH="${KEYTYPE_DEV_APP_PATH:-/Applications/$APP_NAME.app}"
-BUILD_PRODUCT_NAME="${KEYTYPE_BUILD_PRODUCT_NAME:-KeyType}"
+BUILD_PRODUCT_NAME="${KEYTYPE_BUILD_PRODUCT_NAME:-Writelong}"
 SHOULD_LAUNCH=1
 
 usage() {
   cat <<USAGE
 Usage: Scripts/build-dev-app.sh [--no-launch]
 
-Builds KeyType with a stable development product name and bundle identifier, then installs it at:
+Builds Writelong with a stable development product name and bundle identifier, then installs it at:
   $INSTALL_PATH
 
 Environment overrides:
-  KEYTYPE_DEV_APP_NAME      default: KeyType Dev
-  KEYTYPE_DEV_BUNDLE_ID     default: com.pattonium.KeyType.dev
-  KEYTYPE_DEV_APP_PATH      default: /Applications/KeyType Dev.app
+  KEYTYPE_DEV_APP_NAME      default: Writelong Dev
+  KEYTYPE_DEV_BUNDLE_ID     default: com.heer12354.Writelong.dev
+  KEYTYPE_DEV_APP_PATH      default: /Applications/Writelong Dev.app
   KEYTYPE_CONFIGURATION     default: Debug
   KEYTYPE_DERIVED_DATA_PATH default: .build/DerivedData-dev
 USAGE

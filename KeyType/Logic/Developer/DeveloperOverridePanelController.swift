@@ -58,7 +58,7 @@ final class DeveloperOverridePanelController {
             backing: .buffered,
             defer: false
         )
-        panel.title = "KeyType Tuning"
+        panel.title = "Writelong Tuning"
         panel.contentView = hostingView
         panel.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary, .ignoresCycle]
         panel.hidesOnDeactivate = false

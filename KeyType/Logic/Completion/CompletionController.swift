@@ -1102,7 +1102,7 @@ final class CompletionController {
         warmupTask?.cancel()
         let context = TextFieldContext(
             beforeCursor: "The",
-            target: AppTarget(bundleIdentifier: "com.pattonium.KeyType", appName: "KeyType"),
+            target: AppTarget(bundleIdentifier: "com.heer12354.Writelong", appName: "Writelong"),
             detectedLanguage: "en"
         )
         let prompt = KeyTypeModuleGraph.makePromptBuilder().buildPrompt(context: context).prompt
@@ -1538,7 +1538,8 @@ final class CompletionController {
         if isKeyTypeBundleIdentifier(target.bundleIdentifier) {
             return true
         }
-        return target.appName.localizedCaseInsensitiveContains("KeyType")
+        return target.appName.localizedCaseInsensitiveContains("Writelong")
+            || target.appName.localizedCaseInsensitiveContains("KeyType")
     }
 
     private nonisolated static func isKeyTypeBundleIdentifier(_ bundleIdentifier: String) -> Bool {
@@ -1547,7 +1548,8 @@ final class CompletionController {
            normalized == ownBundleIdentifier {
             return true
         }
-        return normalized.hasPrefix("com.pattonium.keytype")
+        return normalized.hasPrefix("com.heer12354.writelong")
+            || normalized.hasPrefix("com.pattonium.keytype")
     }
 
     private static func contextKey(for context: TextFieldContext) -> String {

@@ -36,7 +36,16 @@ struct GeneralSettingsView: View {
             Section("Appearance") {
                 Picker("Menu bar icon", selection: $settings.menuBarIcon) {
                     ForEach(MenuBarIcon.allCases) { icon in
-                        Label(icon.title, systemImage: icon.symbolName).tag(icon)
+                        if icon == .brand {
+                            Label {
+                                Text("Writelong logo")
+                            } icon: {
+                                Image("WritelongLogo")
+                            }
+                            .tag(icon)
+                        } else {
+                            Label(icon.title, systemImage: icon.symbolName).tag(icon)
+                        }
                     }
                 }
                 Picker("App logo", selection: $settings.appLogo) {

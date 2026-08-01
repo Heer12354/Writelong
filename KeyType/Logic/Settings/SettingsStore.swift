@@ -49,7 +49,7 @@ enum CompletionLength: String, CaseIterable, Identifiable {
 }
 
 enum MenuBarIcon: String, CaseIterable, Identifiable {
-    case cursor, pen, sparkle, document, brain
+    case brand, cursor, pen, sparkle, document, brain
 
     var id: String { rawValue }
 
@@ -57,6 +57,7 @@ enum MenuBarIcon: String, CaseIterable, Identifiable {
 
     var symbolName: String {
         switch self {
+        case .brand: return "WritelongLogo"
         case .cursor: return "text.cursor"
         case .pen: return "pencil.tip"
         case .sparkle: return "sparkles"
@@ -254,8 +255,8 @@ final class SettingsStore {
         self.completionLength = (defaults.string(forKey: Key.completionLength))
             .flatMap(CompletionLength.init(rawValue:)) ?? .medium
         self.selectedModelFilename = defaults.string(forKey: Key.selectedModelFilename)
-        self.menuBarIcon = defaults.string(forKey: Key.menuBarIcon).flatMap(MenuBarIcon.init(rawValue:)) ?? .cursor
-        self.appLogo = defaults.string(forKey: Key.appLogo).flatMap(AppLogo.init(rawValue:)) ?? .classic
+        self.menuBarIcon = defaults.string(forKey: Key.menuBarIcon).flatMap(MenuBarIcon.init(rawValue:)) ?? .brand
+        self.appLogo = defaults.string(forKey: Key.appLogo).flatMap(AppLogo.init(rawValue:)) ?? .writelong
         self.perAppDisabled = Set(defaults.stringArray(forKey: Key.perAppDisabled) ?? [])
         self.manualPerAppDisplayNames =
             defaults.dictionary(forKey: Key.manualPerAppDisplayNames) as? [String: String] ?? [:]
