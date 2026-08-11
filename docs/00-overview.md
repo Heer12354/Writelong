@@ -124,4 +124,5 @@ For the current set of open improvement themes (vs. the completed build mileston
 | `06-quality-playbook.md`    | Triaging bad/missing completions from `predictions.log`        |
 | `07-performance.md`         | Latency budget, release-build rule, profiling methodology      |
 | `08-app-compatibility.md`   | How to add a new per-app / per-domain override                 |
-| `09-benchmark-datasets.md`  | Public benchmark dataset sources, generation, and validation  |
+| `09-benchmark-datasets.md`  | Public benchmark dataset sources, scoring, generation, and validation  |
+| `10-privacy-and-permissions.md` | Permission footprint, local data controls, and limitations |

@@ -124,38 +124,24 @@ final class ContextCaptureController {
         )
     }
 
-    /// Compact, privacy-conscious one-line summary of a `TextFieldContext`. Lengths and
-    /// short edge characters only; never the full text the user is editing.
+    /// Compact, privacy-conscious one-line summary of a `TextFieldContext` for diagnostics.
+    /// It deliberately excludes captured text and user-controlled labels/titles because this
+    /// value is emitted through the macOS unified log.
     static func summary(for snapshot: FocusedFieldSnapshot) -> String {
         let ctx = snapshot.context
-        let before = ctx.beforeCursor
-        let after = ctx.afterCursor
-        let beforeTail = String(before.suffix(12))
-        let afterHead = String(after.prefix(12))
         let rect = snapshot.caretRect
             .map { "(\(Int($0.minX)),\(Int($0.minY))) \(Int($0.width))x\(Int($0.height))" }
             ?? "nil"
-        let domain = ctx.target.domain.map { " domain=\($0)" } ?? ""
-        let title = ctx.target.windowTitle.map { " title=\"\(truncate($0, to: 40))\"" } ?? ""
-        let language = ctx.detectedLanguage.map { " lang=\($0)" } ?? ""
-        let labels = ctx.labels.isEmpty ? "" : " labels=[\(ctx.labels.prefix(2).joined(separator: ","))]"
         let qual = snapshot.caretQuality ?? "n/a"
         let source = snapshot.caretSource ?? "n/a"
         return """
-        AX[\(ctx.target.bundleIdentifier)]\(title)\(domain) \
-        before=\(before.count)ch …"\(escape(beforeTail))" \
-        after=\(after.count)ch "\(escape(afterHead))"… \
-        eol=\(ctx.geometry.isAtEndOfLine) rtl=\(ctx.geometry.isRightToLeft)\(language)\(labels) \
+        AX[\(ctx.target.bundleIdentifier)] \
+        before=\(ctx.beforeCursor.count)ch after=\(ctx.afterCursor.count)ch \
+        selection=\(ctx.selection.selectedText?.count ?? 0)ch labels=\(ctx.labels.count) \
+        languageDetected=\(ctx.detectedLanguage != nil) domainDetected=\(ctx.target.domain != nil) \
+        eol=\(ctx.geometry.isAtEndOfLine) rtl=\(ctx.geometry.isRightToLeft) \
         rect=\(rect) caret=\(source)/\(qual)
         """
-    }
-
-    private static func escape(_ s: String) -> String {
-        s.replacingOccurrences(of: "\n", with: "\\n").replacingOccurrences(of: "\t", with: "\\t")
-    }
-
-    private static func truncate(_ s: String, to max: Int) -> String {
-        s.count <= max ? s : String(s.prefix(max)) + "…"
     }
 
     static func shouldPreserveLatestTunableSnapshotOnMissingSnapshot(frontmostBundleIdentifier: String?) -> Bool {

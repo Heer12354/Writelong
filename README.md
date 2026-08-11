@@ -34,6 +34,37 @@
 
 It's a free, open-source, MIT-licensed alternative to the closed-source **Cotypist**.
 
+## What's new
+
+- **Safer diagnostics:** normal capture logs now contain structural metadata only, never the text,
+  labels, window title, or domain from the field you are editing.
+- **Clearer permissions:** onboarding explains why Accessibility is needed, what Writelong reads,
+  and that captured writing is not sent to a server.
+- **Auditable benchmarks:** published scoring definitions, suite sizes, result-history rules, and
+  deterministic evaluation guidance.
+
+## Privacy & permissions
+
+Writelong runs its model locally. Accessibility lets it read the focused text field and caret
+position to create a completion; it does not transmit captured text. Secure and password fields
+are excluded. Writing-history personalization and clipboard context are local, user-controllable,
+and enabled on new installs; screen/OCR context is off until enabled.
+
+See [Privacy & Permissions](docs/10-privacy-and-permissions.md) for the full permission footprint,
+data controls, and limitations.
+
+## Benchmarks
+
+The benchmark harness scores final visible behavior, not just raw model output. Its committed V1
+public suites contain 1,208 cases: smoke (36), core (700), edge (300), policy (72), and latency
+(100). `precisionWhenShown` is correct visible insertions divided by all visible suggestions;
+`wrongShowRate` is wrong visible suggestions divided by all rows, so they are different metrics
+with different denominators.
+
+Results are deterministic for a fixed model, dataset, and configuration; they are not a guarantee
+of real-world quality. The scoring rules, source selection, suite mix, and repeatable commands are
+published in [Benchmark Dataset Curation](docs/09-benchmark-datasets.md).
+
 ## Contents
 
 - [Why Writelong](#why-writelong)
@@ -53,7 +84,8 @@ It's a free, open-source, MIT-licensed alternative to the closed-source **Cotypi
 - 🤫 **Suppression over slop.** Showing nothing beats showing a wrong, stale, or chatty suggestion — every candidate has to earn its place on screen.
 - ✍️ **Continuation, not chat.** The prompt ends exactly at your cursor, so the model finishes *your* sentence instead of replying to it.
 - ⚡ **Tuned for every keystroke.** Generation is cancellable and reuses KV-cache across keystrokes, so it doesn't lag behind you as you type.
-- 🌍 **Multi-language & RTL-aware.** Context capture detects language and writing direction per field.
+- 🌍 **Language and RTL context capture.** The app detects language and writing direction per field;
+  formal multilingual benchmark coverage is still in progress.
 
 ## Features
 
@@ -104,7 +136,7 @@ KeyType/
 ├── KeyType.xcodeproj/
 ├── KeyType/                  ← app target (menu-bar shell)
 ├── KeyTypeTests/  KeyTypeUITests/
-├── docs/                     ← project brief & playbooks (00–09)
+├── docs/                     ← project brief, playbooks, benchmarks, and privacy notes
 └── Packages/                 ← local SwiftPM packages (the real logic)
     ├── AutocompleteCore/         shared domain types & protocols
     ├── MacContextCapture/        AX focus + caret + text-field snapshot

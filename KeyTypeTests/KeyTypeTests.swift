@@ -10,7 +10,7 @@ import AppKit
 import CompletionUI
 import MacContextCapture
 import Testing
-@testable import KeyType
+@testable import Writelong
 
 struct KeyTypeTests {
     private static let target = AppTarget(bundleIdentifier: "com.test.app", appName: "Test")
@@ -183,6 +183,37 @@ struct KeyTypeTests {
         #expect(overlaySnapshot?.caretRect == caret)
         #expect(overlaySnapshot?.fieldRect == field)
         #expect(overlaySnapshot?.availableTextRect == CGRect(x: 44, y: 20, width: 66, height: 18))
+    }
+
+    @Test @MainActor func contextSummaryNeverIncludesCapturedTextOrLabels() {
+        let context = TextFieldContext(
+            beforeCursor: "private before cursor text",
+            afterCursor: "private after cursor text",
+            selection: TextSelection(selectedText: "private selection"),
+            target: AppTarget(
+                bundleIdentifier: "com.test.app",
+                appName: "Test",
+                windowTitle: "Private window title",
+                domain: "private.example"
+            ),
+            labels: ["Private label"],
+            detectedLanguage: "en"
+        )
+        let summary = ContextCaptureController.summary(for: FocusedFieldSnapshot(
+            context: context,
+            caretRect: nil,
+            caretSource: nil,
+            caretQuality: nil
+        ))
+
+        #expect(!summary.contains("private before cursor text"))
+        #expect(!summary.contains("private after cursor text"))
+        #expect(!summary.contains("private selection"))
+        #expect(!summary.contains("Private window title"))
+        #expect(!summary.contains("private.example"))
+        #expect(!summary.contains("Private label"))
+        #expect(summary.contains("before=26ch"))
+        #expect(summary.contains("labels=1"))
     }
 
     @Test @MainActor func missingSnapshotPreservesTunableTargetOnlyForKeyTypeFocus() {

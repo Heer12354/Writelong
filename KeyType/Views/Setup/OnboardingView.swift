@@ -179,13 +179,23 @@ struct OnboardingView: View {
     private var permissionsStep: some View {
         StepHeader(
             title: "Enable Writelong",
-            subtitle: "Writelong needs a couple of permissions to read the focused field and accept completions."
+            subtitle: "Writelong needs permissions to provide system-wide completions. Read what each permission does before granting it."
         )
         VStack(spacing: 10) {
+            CardContainer {
+                VStack(alignment: .leading, spacing: 6) {
+                    Label("How Accessibility is used", systemImage: "lock.shield")
+                        .font(.headline)
+                    Text("Writelong reads the focused field and caret position only while it is producing a local completion. It does not send captured text to a server. Password and secure fields are excluded.")
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
             PermissionCard(
                 kind: .accessibility,
                 requirement: .required,
-                explanation: "Reads the focused text field and caret position across any app.",
+                explanation: "Lets Writelong read the focused field and caret position across supported apps. This macOS permission is system-wide; Writelong limits use to its completion pipeline.",
                 isGranted: permissions.accessibility.isGranted,
                 guidance: permissionGuidance
             )

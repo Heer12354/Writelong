@@ -1,4 +1,4 @@
-# KeyType - Benchmark Dataset Curation
+# Writelong - Benchmark Dataset Curation
 
 This documents how the V1 public benchmark dataset snapshot in `KeyTypeBench-20260603/` was
 created. The reusable harness lives in `Packages/KeyTypeBench/`; the dated directory is the
@@ -179,6 +179,38 @@ Use `qualityScore`, `positiveCoverage`, and latency to compare utility only afte
 `wrongShowRate`, `precisionWhenShown`, and `suppressionAccuracy`. This preserves KeyType's product
 rule - prefer suppression to a wrong suggestion - without hiding wrong visible suggestions inside a
 single blended score.
+
+### Public metric definitions
+
+`shownAcceptable` is a deterministic, authored rubric: a shown completion is correct when its
+whitespace-normalized text exactly matches an acceptable target, extends that target, or is a
+shorter prefix ending at a word-like boundary. No LLM or human judge is used in the automated
+score. Positive rows that safely suppress receive partial `qualityScore` credit but do not count as
+correct visible insertions.
+
+| Metric | Formula | Denominator |
+| --- | --- | --- |
+| `precisionWhenShown` | correct visible insertions / shown suggestions | All shown suggestions, including bad shows on suppression rows. |
+| `wrongShowRate` | wrong shown suggestions / all rows | Every row in the selected suite. |
+| `positiveCoverage` | correct visible insertions / positive rows | Rows expecting an insertion. |
+| `suppressionAccuracy` | correct suppressions / negative rows | Rows expecting suppression. |
+
+The automated pipeline is deterministic when model file, quantization, runtime settings, dataset,
+and hardware/runtime build are fixed; it therefore reports no fabricated confidence interval.
+Different model builds, quantizations, settings, or hardware are separate measurements and should
+be recorded as separate release results rather than merged into one estimate. Independent human
+review remains useful for a sample of the edge suite before using benchmark figures in launch
+material.
+
+## Result history
+
+Do not overwrite published benchmark results. Each release should add a dated row with the model
+identifier, quantization, suite/split, commit, and the four metrics above. Only publish a row after
+running the validation commands in this document and retaining the aggregate JSON alongside it.
+
+| Release | Date | Model / quantization | Suite / split | Precision when shown | Wrong-show rate | Notes |
+| --- | --- | --- | --- | ---: | ---: | --- |
+| Pending first published run | - | - | - | - | - | No public score is claimed until this row is backed by a retained aggregate. |
 
 ## Suite Mix
 

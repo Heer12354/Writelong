@@ -3604,3 +3604,18 @@ text. Both are now closed:
 - Consequences: Profiles can be created, selected, disabled, reset, exported, and imported without
   exposing stored writing. Lexical preferences intentionally remain statistical rather than raw
   phrase recall, trading exact phrase reuse for stronger privacy guarantees.
+
+## ADR-117 — Keep capture diagnostics free of user text
+
+- Date: 2026-08-10
+- Status: accepted
+- Context: The context-capture controller emitted short field-text snippets, window titles,
+  domains, and labels through the macOS unified log. Even truncated diagnostics weaken the app's
+  local-first privacy posture because those values can contain user-controlled or sensitive text.
+- Decision: Keep normal capture diagnostics useful for geometry and pipeline troubleshooting, but
+  log only structural metadata: target bundle identifier, text lengths, selection length, label
+  count, presence flags, writing direction, and caret geometry. Full prompt logging remains a
+  separate explicit developer opt-in.
+- Consequences: Developers lose inline text snippets from the standard log, but users gain a
+  safer default. Debugging text-specific issues now requires deliberately enabling the existing
+  developer prompt log with suitable non-sensitive reproduction text.
