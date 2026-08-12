@@ -262,6 +262,19 @@ Run model evaluation in release mode:
 swift run -c release --package-path Packages/KeyTypeBench KeyTypeBench run --suite smoke
 ```
 
+Measure observed run-to-run variation on the edge suite with a real GGUF model and matching ACPF
+profile. The script writes every run separately and derives its summary only from the generated
+aggregate files; it never invents a confidence interval:
+
+```sh
+KeyTypeBench-20260603/Scripts/run_edge_variance.sh \
+  --model "$HOME/Library/Application Support/KeyType/Models/Qwen3.5-2B-Base.i1-Q4_K_M.gguf"
+```
+
+This requires a local model/profile and can take several minutes. Publish the resulting
+`variance-summary.json` with the corresponding release result; until then, the README deliberately
+does not claim a measured variance.
+
 Use `--cases KeyTypeBench-20260603/Datasets/<suite>.jsonl` when running a suite from the dated
 snapshot explicitly.
 
