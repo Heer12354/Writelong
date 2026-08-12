@@ -65,6 +65,15 @@ Results are deterministic for a fixed model, dataset, and configuration; they ar
 of real-world quality. The scoring rules, source selection, suite mix, and repeatable commands are
 published in [Benchmark Dataset Curation](docs/09-benchmark-datasets.md).
 
+### Result history
+
+| Date | Result | Suite | Rows | Model / quantization | Precision when shown | Wrong-show rate | Artifact |
+| --- | --- | --- | ---: | --- | ---: | ---: | --- |
+| 2026-06-07 | Archived experimental run | edge | 300 | Qwen3.5-2B-Base.i1-Q4_K_M / Q4_K_M | 58.1% | 18.0% | `KeyTypeBench-20260607/Results/edge-midline-production-conservative/aggregate.json` |
+
+This is an archived, configuration-specific measurement, not a release guarantee. Generate the
+table from committed result folders with `python3 KeyTypeBench-20260603/Scripts/generate_result_history.py`.
+
 ## Contents
 
 - [Why Writelong](#why-writelong)

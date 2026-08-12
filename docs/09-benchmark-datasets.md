@@ -208,9 +208,15 @@ Do not overwrite published benchmark results. Each release should add a dated ro
 identifier, quantization, suite/split, commit, and the four metrics above. Only publish a row after
 running the validation commands in this document and retaining the aggregate JSON alongside it.
 
+Generate the README-ready history table from all committed dated result folders with:
+
+```sh
+python3 KeyTypeBench-20260603/Scripts/generate_result_history.py
+```
+
 | Release | Date | Model / quantization | Suite / split | Precision when shown | Wrong-show rate | Notes |
 | --- | --- | --- | --- | ---: | ---: | --- |
-| Pending first published run | - | - | - | - | - | No public score is claimed until this row is backed by a retained aggregate. |
+| Archived experimental run | 2026-06-07 | Qwen3.5-2B-Base.i1-Q4_K_M / Q4_K_M | edge / archived | 58.1% | 18.0% | Backed by `KeyTypeBench-20260607/Results/edge-midline-production-conservative/aggregate.json`; not a release guarantee. |
 
 ## Suite Mix
 
