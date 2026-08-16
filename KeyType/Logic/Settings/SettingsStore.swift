@@ -63,18 +63,20 @@ enum MenuBarIcon: String, CaseIterable, Identifiable {
     var imageAssetName: String? {
         switch self {
         case .brand: return "WritelongLogo"
-        case .orbit: return "OrbitLogo"
-        case .flow: return "FlowLogo"
-        case .horizon: return "HorizonLogo"
-        case .perspective: return "PerspectiveLogo"
-        case .keystone: return "KeystoneLogo"
-        case .cursor, .pen, .sparkle, .document, .brain: return nil
+        case .orbit, .flow, .horizon, .perspective, .keystone,
+             .cursor, .pen, .sparkle, .document, .brain:
+            return nil
         }
     }
 
     var symbolName: String? {
         switch self {
-        case .brand, .orbit, .flow, .horizon, .perspective, .keystone: return nil
+        case .brand: return nil
+        case .orbit: return "circle.dotted.circle"
+        case .flow: return "water.waves"
+        case .horizon: return "sun.horizon"
+        case .perspective: return "rectangle.3.group.fill"
+        case .keystone: return "door.left.hand.open"
         case .cursor: return "text.cursor"
         case .pen: return "pencil.tip"
         case .sparkle: return "sparkles"

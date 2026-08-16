@@ -51,11 +51,12 @@ struct KeyTypeTests {
 
     @Test func appearanceConceptsExposeImageAssets() {
         let expectedAssets: Set<String> = ["OrbitLogo", "FlowLogo", "HorizonLogo", "PerspectiveLogo", "KeystoneLogo"]
+        let conceptIcons: Set<MenuBarIcon> = [.orbit, .flow, .horizon, .perspective, .keystone]
 
         #expect(expectedAssets.isSubset(of: Set(AppLogo.allCases.compactMap(\.imageAssetName))))
-        #expect(expectedAssets.isSubset(of: Set(MenuBarIcon.allCases.compactMap(\.imageAssetName))))
         #expect(AppLogo.allCases.filter { $0.imageAssetName != nil }.count == 6)
-        #expect(MenuBarIcon.allCases.filter { $0.imageAssetName != nil }.count == 6)
+        #expect(MenuBarIcon.allCases.filter { $0.imageAssetName != nil }.count == 1)
+        #expect(conceptIcons.allSatisfy { $0.symbolName != nil })
     }
 
     @Test func adaptiveDebounceUsesFastPathAfterResponsiveGeneration() {

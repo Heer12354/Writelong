@@ -3632,3 +3632,15 @@ text. Both are now closed:
 - Consequences: Orbit, Flow, Horizon, Perspective, and Keystone stay consistent between the two
   appearance controls. The Finder bundle icon remains the static release icon; a choice changes
   the Dock icon only while Writelong is running.
+
+## ADR-119 — Use monochrome system templates for concept menu-bar icons
+
+- Date: 2026-08-16
+- Status: accepted
+- Context: The colourful Dock artwork is difficult to distinguish at menu-bar scale and does not
+  automatically adapt to macOS light and dark menu bars.
+- Decision: Keep the five full-colour concept assets for Dock selection, but render Orbit, Flow,
+  Horizon, Perspective, and Keystone in the menu bar with semantically matching SF Symbol
+  templates. macOS automatically draws those symbols in the appropriate black or white tint.
+- Consequences: The appearance picker remains recognisable while the status item is clear and
+  accessible in every menu-bar appearance. No completion model or writing behavior changes.
