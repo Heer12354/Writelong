@@ -200,13 +200,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func applyAppLogo(_ logo: AppLogo) {
-        switch logo {
-        case .classic:
+        if let assetName = logo.imageAssetName, let image = NSImage(named: assetName) {
+            NSApp.applicationIconImage = image
+        } else {
             if let classicApplicationIcon { NSApp.applicationIconImage = classicApplicationIcon }
-        case .writelong:
-            if let image = NSImage(named: "WritelongLogo") {
-                NSApp.applicationIconImage = image
-            }
         }
     }
 

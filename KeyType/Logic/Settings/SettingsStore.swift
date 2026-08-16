@@ -49,15 +49,32 @@ enum CompletionLength: String, CaseIterable, Identifiable {
 }
 
 enum MenuBarIcon: String, CaseIterable, Identifiable {
-    case brand, cursor, pen, sparkle, document, brain
+    case brand, orbit, flow, horizon, perspective, keystone, cursor, pen, sparkle, document, brain
 
     var id: String { rawValue }
 
-    var title: String { rawValue.capitalized }
+    var title: String {
+        switch self {
+        case .brand: return "Writelong"
+        default: return rawValue.capitalized
+        }
+    }
 
-    var symbolName: String {
+    var imageAssetName: String? {
         switch self {
         case .brand: return "WritelongLogo"
+        case .orbit: return "OrbitLogo"
+        case .flow: return "FlowLogo"
+        case .horizon: return "HorizonLogo"
+        case .perspective: return "PerspectiveLogo"
+        case .keystone: return "KeystoneLogo"
+        case .cursor, .pen, .sparkle, .document, .brain: return nil
+        }
+    }
+
+    var symbolName: String? {
+        switch self {
+        case .brand, .orbit, .flow, .horizon, .perspective, .keystone: return nil
         case .cursor: return "text.cursor"
         case .pen: return "pencil.tip"
         case .sparkle: return "sparkles"
@@ -68,9 +85,29 @@ enum MenuBarIcon: String, CaseIterable, Identifiable {
 }
 
 enum AppLogo: String, CaseIterable, Identifiable {
-    case classic, writelong
+    case classic, writelong, orbit, flow, horizon, perspective, keystone
+
     var id: String { rawValue }
-    var title: String { self == .classic ? "Classic" : "Writelong" }
+
+    var title: String {
+        switch self {
+        case .classic: return "Classic"
+        case .writelong: return "Writelong"
+        default: return rawValue.capitalized
+        }
+    }
+
+    var imageAssetName: String? {
+        switch self {
+        case .classic: return nil
+        case .writelong: return "WritelongLogo"
+        case .orbit: return "OrbitLogo"
+        case .flow: return "FlowLogo"
+        case .horizon: return "HorizonLogo"
+        case .perspective: return "PerspectiveLogo"
+        case .keystone: return "KeystoneLogo"
+        }
+    }
 }
 
 /// OS-derived English spelling/phrasing preference. This stays as a small prompt-side style signal,

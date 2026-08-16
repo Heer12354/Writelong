@@ -36,33 +36,17 @@ struct GeneralSettingsView: View {
             Section("Appearance") {
                 Picker("Menu bar icon", selection: $settings.menuBarIcon) {
                     ForEach(MenuBarIcon.allCases) { icon in
-                        if icon == .brand {
-                            Label {
-                                Text("Writelong logo")
-                            } icon: {
-                                Image("WritelongLogo")
-                            }
+                        appearanceLabel(icon.title, assetName: icon.imageAssetName, symbolName: icon.symbolName)
                             .tag(icon)
-                        } else {
-                            Label(icon.title, systemImage: icon.symbolName).tag(icon)
-                        }
                     }
                 }
                 Picker("App logo", selection: $settings.appLogo) {
                     ForEach(AppLogo.allCases) { logo in
-                        if logo == .writelong {
-                            Label {
-                                Text(logo.title)
-                            } icon: {
-                                Image("WritelongLogo")
-                            }
+                        appearanceLabel(logo.title, assetName: logo.imageAssetName)
                             .tag(logo)
-                        } else {
-                            Text(logo.title).tag(logo)
-                        }
                     }
                 }
-                Text("The logo choice updates the app icon while Writelong is running.")
+                Text("The app logo updates the Dock icon while Writelong is running. Choose any matching concept for the menu bar.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }
@@ -73,5 +57,22 @@ struct GeneralSettingsView: View {
             }
         }
         .formStyle(.grouped)
+    }
+
+    @ViewBuilder
+    private func appearanceLabel(_ title: String, assetName: String?, symbolName: String? = nil) -> some View {
+        if let assetName {
+            Label {
+                Text(title)
+            } icon: {
+                Image(assetName)
+                    .resizable()
+                    .scaledToFit()
+            }
+        } else if let symbolName {
+            Label(title, systemImage: symbolName)
+        } else {
+            Text(title)
+        }
     }
 }

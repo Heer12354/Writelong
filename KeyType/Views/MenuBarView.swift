@@ -18,13 +18,13 @@ struct MenuBarLabel: View {
 
     var body: some View {
         Group {
-            if settings.menuBarIcon == .brand {
-                Image("WritelongLogo")
+            if let assetName = settings.menuBarIcon.imageAssetName {
+                Image(assetName)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 18, height: 18)
-            } else {
-                Image(systemName: settings.menuBarIcon.symbolName)
+            } else if let symbolName = settings.menuBarIcon.symbolName {
+                Image(systemName: symbolName)
             }
         }
             .onReceive(NotificationCenter.default.publisher(for: .keyTypeShouldOpenOnboarding)) { _ in

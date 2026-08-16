@@ -3619,3 +3619,16 @@ text. Both are now closed:
 - Consequences: Developers lose inline text snippets from the standard log, but users gain a
   safer default. Debugging text-specific issues now requires deliberately enabling the existing
   developer prompt log with suitable non-sensitive reproduction text.
+
+## ADR-118 — Keep appearance choices as named catalog assets
+
+- Date: 2026-08-16
+- Status: accepted
+- Context: Writelong needs five user-supplied visual concepts available as both Dock and menu-bar
+  choices, without disturbing the existing SF Symbol alternatives or the default brand.
+- Decision: Store each concept as a named asset-catalog image and expose its shared asset name
+  through `AppLogo` and `MenuBarIcon`. The appearance picker renders these assets directly, while
+  the app delegate applies the chosen logo to the runtime Dock icon.
+- Consequences: Orbit, Flow, Horizon, Perspective, and Keystone stay consistent between the two
+  appearance controls. The Finder bundle icon remains the static release icon; a choice changes
+  the Dock icon only while Writelong is running.

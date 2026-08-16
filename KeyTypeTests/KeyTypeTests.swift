@@ -49,6 +49,15 @@ struct KeyTypeTests {
         TextFieldContext(beforeCursor: beforeCursor + typedSinceAnchor, target: target)
     }
 
+    @Test func appearanceConceptsExposeImageAssets() {
+        let expectedAssets: Set<String> = ["OrbitLogo", "FlowLogo", "HorizonLogo", "PerspectiveLogo", "KeystoneLogo"]
+
+        #expect(expectedAssets.isSubset(of: Set(AppLogo.allCases.compactMap(\.imageAssetName))))
+        #expect(expectedAssets.isSubset(of: Set(MenuBarIcon.allCases.compactMap(\.imageAssetName))))
+        #expect(AppLogo.allCases.filter { $0.imageAssetName != nil }.count == 6)
+        #expect(MenuBarIcon.allCases.filter { $0.imageAssetName != nil }.count == 6)
+    }
+
     @Test func adaptiveDebounceUsesFastPathAfterResponsiveGeneration() {
         #expect(CompletionController.adaptiveDebounceNanoseconds(lastGenerationLatencyMs: 35) == 15_000_000)
     }
