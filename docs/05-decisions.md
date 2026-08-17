@@ -3657,3 +3657,16 @@ text. Both are now closed:
   framework-free test suite; developers with the vendored framework can run the full package.
 - Consequences: CI verifies the stable runtime contract without downloading a binary framework.
   The real llama integration remains covered by local macOS development builds.
+
+## ADR-121 — Defer full Accessibility snapshots until typing pauses
+
+- Date: 2026-08-17
+- Status: accepted
+- Context: A text-value Accessibility notification arrives for every keystroke. Reading the full
+  field, labels, window metadata, and caret geometry immediately performs synchronous cross-process
+  Accessibility work on the main run loop, which can delay the target app's visible key handling.
+- Decision: Coalesce value and selection notifications for 90 ms before reading a full snapshot.
+  Focus, window, and destruction notifications retain the existing 20 ms refresh. A new keystroke
+  cancels the pending full read, while the completion controller continues to cancel stale decode.
+- Consequences: Characters render normally during rapid typing and predictions begin after a short
+  pause rather than competing with every keypress. No completion capabilities are removed.

@@ -4,7 +4,10 @@ import PackageDescription
 import Foundation
 
 let llamaFrameworkPath = "Vendor/llama.xcframework"
-let hasVendoredLlama = FileManager.default.fileExists(atPath: llamaFrameworkPath)
+let packageDirectory = URL(fileURLWithPath: #filePath).deletingLastPathComponent()
+let hasVendoredLlama = FileManager.default.fileExists(
+    atPath: packageDirectory.appendingPathComponent(llamaFrameworkPath).path
+)
 
 var products: [Product] = [
     .library(name: "ModelRuntime", targets: ["ModelRuntime"])

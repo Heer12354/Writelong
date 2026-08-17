@@ -42,7 +42,11 @@ public final class AccessibilityContextTracker: NSObject {
     private var fallbackBuffer = KeystrokeFallbackTextBuffer()
 
     private var pendingRefresh: DispatchWorkItem?
-    private let debounceInterval: TimeInterval = 0.02
+    /// Full AX snapshots synchronously query the app being typed into. Waiting for a brief pause
+    /// after value/selection notifications prevents those cross-process reads from competing with
+    /// the app's own key handling on every keystroke.
+    private let typingDebounceInterval: TimeInterval = 0.09
+    private let stateChangeDebounceInterval: TimeInterval = 0.02
 
     private var lastSnapshot: FocusedFieldSnapshot?
 
@@ -262,12 +266,24 @@ public final class AccessibilityContextTracker: NSObject {
             || name == kAXUIElementDestroyedNotification {
             refreshFocusedElementObservation()
         }
-        refreshSoon()
+        if name == kAXValueChangedNotification || name == kAXSelectedTextChangedNotification {
+            refreshAfterTypingPause()
+        } else {
+            refreshSoon()
+        }
     }
 
     // MARK: - Refresh pipeline
 
     private func refreshSoon() {
+        scheduleRefresh(after: stateChangeDebounceInterval)
+    }
+
+    private func refreshAfterTypingPause() {
+        scheduleRefresh(after: typingDebounceInterval)
+    }
+
+    private func scheduleRefresh(after delay: TimeInterval) {
         pendingRefresh?.cancel()
         let work = DispatchWorkItem { [weak self] in
             Task { @MainActor [weak self] in
@@ -275,7 +291,7 @@ public final class AccessibilityContextTracker: NSObject {
             }
         }
         pendingRefresh = work
-        DispatchQueue.main.asyncAfter(deadline: .now() + debounceInterval, execute: work)
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: work)
     }
 
     private func refreshNow() {
