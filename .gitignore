@@ -40,6 +40,7 @@ Packages/ModelRuntime/Vendor/
 Models/
 
 # Completion benchmark local/private data and generated reports
+tmp/
 KeyTypeBench-20260603/Private/
 KeyTypeBench-20260603/Results/
 KeyTypeBench-20260603/Datasets/private/

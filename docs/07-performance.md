@@ -1,4 +1,4 @@
-# KeyType — Performance & Latency
+# Writelong — Performance & Latency
 
 KeyType must feel **instant per keystroke**. Latency is a first-class quality signal: a correct
 completion that arrives too late is still a bad experience. This doc captures the methodology so

@@ -1,4 +1,4 @@
-# KeyType — Adding an App / Domain Override
+# Writelong — Adding an App / Domain Override
 
 A good completion still fails if Tab, paste, styling, the overlay, or the prompt behaves wrong in a
 specific app. Per-app behavior is **data**, not code: add a `TargetOverride` to `AppCompatibility`

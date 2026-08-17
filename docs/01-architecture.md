@@ -1,4 +1,4 @@
-# KeyType — Architecture
+# Writelong — Architecture
 
 This describes the module graph, each module's responsibility, the runtime data flow, and the
 existing code you build on. It is a *behavior-level* reconstruction (see clean-room rules in

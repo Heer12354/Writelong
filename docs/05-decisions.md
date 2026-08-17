@@ -1,4 +1,4 @@
-# KeyType — Decision Log
+# Writelong — Decision Log
 
 Append-only record of meaningful decisions (lightweight ADR style). Newest at the bottom.
 Add an entry whenever you make a non-obvious architectural, dependency, or product choice so the
@@ -3644,3 +3644,16 @@ text. Both are now closed:
   templates. macOS automatically draws those symbols in the appropriate black or white tint.
 - Consequences: The appearance picker remains recognisable while the status item is clear and
   accessible in every menu-bar appearance. No completion model or writing behavior changes.
+
+## ADR-120 — Keep CI independent of the vendored llama framework
+
+- Date: 2026-08-17
+- Status: accepted
+- Context: The llama.xcframework is intentionally gitignored and is not available to a clean CI
+  checkout. The framework-free `ModelRuntime` protocol target still has deterministic stub tests
+  worth running in CI.
+- Decision: Split the framework-free stub tests into `ModelRuntimeTests`, and keep the on-device
+  llama tests in `LlamaModelRuntimeTests`. CI builds the `ModelRuntime` target and runs only its
+  framework-free test suite; developers with the vendored framework can run the full package.
+- Consequences: CI verifies the stable runtime contract without downloading a binary framework.
+  The real llama integration remains covered by local macOS development builds.

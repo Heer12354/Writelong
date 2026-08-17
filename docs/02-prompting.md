@@ -1,4 +1,4 @@
-# KeyType — Prompting & Context Management
+# Writelong — Prompting & Context Management
 
 How KeyType turns a captured `TextFieldContext` into a single prompt that makes a **base model**  
 **continue the user's text** at the cursor.

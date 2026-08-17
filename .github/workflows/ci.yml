@@ -1,0 +1,36 @@
+name: Swift Package CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  packages:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and test Swift packages
+        shell: bash
+        run: |
+          set -euo pipefail
+          for package_path in Packages/*; do
+            package_name="$(basename "$package_path")"
+            if [[ "$package_name" == "ModelRuntime" ]]; then
+              swift build --package-path "$package_path" --target ModelRuntime
+              swift test --package-path "$package_path" --filter '^ModelRuntimeTests\.'
+            elif [[ "$package_name" == "ConstrainedGeneration" ]]; then
+              swift build --package-path "$package_path" --target ConstrainedGeneration
+              echo "Skipping llama-backed ConstrainedGeneration tests on clean CI."
+            elif [[ "$package_name" == "ProfileBuilder" ]]; then
+              echo "Skipping ProfileBuilder: its only targets require vendored llama.xcframework."
+            elif [[ "$package_name" == "ModelManagement" ]]; then
+              swift build --package-path "$package_path" --target ModelManagement
+              swift test --package-path "$package_path" --filter '^ModelManagementTests\.'
+            elif [[ "$package_name" == "KeyTypeBench" ]]; then
+              swift build --package-path "$package_path" --target KeyTypeBench
+              swift test --package-path "$package_path" --filter '^KeyTypeBenchTests\.'
+            else
+              swift build --package-path "$package_path"
+              swift test --package-path "$package_path"
+            fi
+          done

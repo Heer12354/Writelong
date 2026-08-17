@@ -1,4 +1,4 @@
-# KeyType — Milestones (archive) & Improvement Backlog
+# Writelong — Milestones (archive) & Improvement Backlog
 
 The app is **built and shipping**. The milestone list below (M0–M8) is the **completed
 construction history**, kept for context on how each subsystem came to be and where its

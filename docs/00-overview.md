@@ -1,4 +1,4 @@
-# KeyType — Project Overview
+# Writelong — Project Overview
 
 > **Read this first.** This document and its siblings (`01`–`09`) are the authoritative
 > brief for any human or AI agent working on KeyType. Treat them as the source of truth.

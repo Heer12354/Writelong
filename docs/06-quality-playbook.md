@@ -1,4 +1,4 @@
-# KeyType — Completion Quality Playbook
+# Writelong — Completion Quality Playbook
 
 How to triage a **bad or missing completion**. This is the most common maintenance task. The
 golden rule from the product principles still holds: **prefer suppression to a wrong suggestion** —

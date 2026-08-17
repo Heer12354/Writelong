@@ -34,6 +34,9 @@
 
 It's a free, open-source, MIT-licensed alternative to the closed-source **Cotypist**.
 
+Writelong is a renamed fork of [KeyType](https://github.com/johnbean393/KeyType) by GitHub user
+[@johnbean393](https://github.com/johnbean393), used under this repository's MIT license.
+
 ## What's new
 
 - **Safer diagnostics:** normal capture logs now contain structural metadata only, never the text,
@@ -104,7 +107,7 @@ table from committed result folders with `python3 KeyTypeBench-20260603/Scripts/
 - **Context you control**, in Settings → Privacy: writing history and clipboard context are on by default (encrypted, local); on-screen OCR context is opt-in, since it needs Screen Recording permission. One-tap "Clear all personal data."
 - **Local personalization** — a privacy-preserving style fingerprint (counts and ratios only, never raw text) tunes suggestion confidence and timing to how you write.
 - **Configurable keyboard shortcuts.**
-- **Auto-updates** via a signed Sparkle appcast; ships as a notarized DMG.
+- **Auto-updates** via Sparkle; releases ship as a drag-to-Applications DMG.
 - **Fully open-source**, MIT-licensed — read or change every line of the pipeline.
 
 ## Models
@@ -127,6 +130,27 @@ All curated models are **base models**, not instruct/chat-tuned — deliberately
 1. Download the latest DMG from [Releases](https://github.com/Heer12354/Writelong/releases).
 2. Open `Writelong.dmg` and drag **Writelong** into **Applications**.
 3. Open **Writelong** and finish onboarding — it asks for **Accessibility** permission (required) and downloads a model.
+
+### If macOS will not open Writelong
+
+The current GitHub DMG is not notarized by Apple, so macOS may prevent the first launch. Only use
+the command below after downloading Writelong from this repository's official
+[Releases](https://github.com/Heer12354/Writelong/releases) page.
+
+**Why this is needed:** macOS adds a `com.apple.quarantine` flag to apps downloaded from the
+internet. Normally, Apple notarization clears the first-launch warning. Until Writelong is
+notarized, the command below removes that download flag so macOS can open the copy you verified.
+It does not change Writelong's features or grant it extra permissions.
+
+1. Move Writelong to **Applications** as described above.
+2. Open **Terminal** and run:
+
+```sh
+sudo xattr -rd com.apple.quarantine /Applications/Writelong.app
+```
+
+3. Enter your Mac password when asked (Terminal will not display the password as you type), then
+   open Writelong again from **Applications**.
 
 ## How it works
 
@@ -173,6 +197,11 @@ git clone https://github.com/Heer12354/Writelong.git
 cd Writelong
 open KeyType.xcworkspace
 ```
+
+Before building the full app, manually place llama.cpp's `llama.xcframework` from release `b9402`
+in `Packages/ModelRuntime/Vendor/llama.xcframework`. The framework is intentionally gitignored and
+is not downloaded automatically; see [ADR-007](docs/05-decisions.md#adr-007--llamacpp-integration-via-prebuilt-xcframework-binarytarget)
+for the source URL and details.
 
 Build/run the **KeyType** scheme (the produced app is **Writelong**).
 

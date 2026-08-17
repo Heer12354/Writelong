@@ -1,4 +1,4 @@
-# KeyType — Token Profiles (ACPF format)
+# Writelong — Token Profiles (ACPF format)
 
 A **token profile** is a tokenizer-specific, memory-mappable companion file that stores stable
 token facts (raw bytes, flags, display width, static bias), a prefix trie, and special-token

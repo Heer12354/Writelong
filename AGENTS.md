@@ -1,4 +1,4 @@
-# KeyType — Always-On Rules
+# Writelong — Always-On Rules
 
 KeyType is an open-source, on-device, system-wide macOS tab-autocomplete utility — a clean-room
 alternative to the closed-source app *Cotypist*. The app is **built and shipping**; work is now
